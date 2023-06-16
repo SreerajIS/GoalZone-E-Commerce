@@ -1,0 +1,179 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Order detail</h2>
+                    <p>Details for Order ID: 3453012</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th width="40%">Product</th>
+                                            <th width="20%">Unit Price</th>
+                                            <th width="20%">Quantity</th>
+                                            <th width="20%" class="text-end">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for(let i=0;i<length;i++){  %>
+                                        <tr>
+                                            <td>
+                                                    <div class="left d-flex align-items-center">
+                                                        <img src="/<%= order.products[i].image[0] %>" width="80" height="80" class="img-xs" alt="Item">&nbsp; &nbsp; &nbsp; 
+                                                        <%= order.products[i].name %>
+                                                    </div>
+                                            </td>
+                                            <td class="align-middle"> <%= order.products[i].price %> </td>
+                                            <td class="align-middle"> <%= order.orderedItems[i].quantity %> </td>
+                                            <td class=" text-end align-middle"> <%= order.products[i].price * order.orderedItems[i].quantity %> </td>
+                                        </tr>
+                                        <% } %>
+                                        <tr>
+                                            <td colspan="4">
+                                                <article class="float-end">
+                                                    <dl class="dlist">
+                                                        <dt>Grand total:&nbsp; <span class="font-weight-bold " style="font-size: large;"><%= order.totalAmount%></span> </dt>
+                                                    </dl>
+                                                </article>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div> <!-- table-responsive// -->
+                        </div> <!-- col// -->
+                        <br><br>
+                        <div class="col-lg-1"></div>
+                        
+                        <div class="col-lg-4">
+                            <div class="box shadow-sm bg-light">
+                                <h4 >Payment Method</h4><br>
+                                <p class="font-weight-bold " style="font-size: large;">
+                                    <%= order.payment %>
+                                </p>
+                            </div>
+                            <br>
+                            <div >
+                                <article class="icontext align-items-start">
+                                    <span class="icon icon-sm rounded-circle bg-primary-light">
+                                        <i class="text-primary material-icons md-place"></i>
+                                    </span>
+                                    <div class="text">
+                                        <h4 class="mb-1">Delivery Address</h4>
+                                        <p class="mb-1">
+                                            <%= order.address[0].name %>,<%= order.address[0].housenumber %> <br><%= order.address[0].place %>, <%= order.address[0].state %>, Pin:<%= order.address[0].pin %> <br> Phone:<%= order.address[0].phone %>
+                                        </p>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="col-lg-6 col-md-6 mb-lg-0  pt-3">
+                                <button class="btn btn-primary float-right mr-5" id="invoice">Download Invoice</button>
+                            </div> <!-- col// -->
+                            <input type="hidden" id="orderDetails" value="<%= JSON.stringify(order) %>">
+                            <input type="hidden" id="productDetails" value="<%= JSON.stringify(product) %>">
+                        </div> <!-- col// -->
+                    </div>
+                </div> <!-- card-body end// -->
+            </div> <!-- card end// -->
+        </section> <!-- content-main end// -->
+        
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#invoice').click((e) => {
+            let orderDetails = JSON.parse(document.getElementById('orderDetails').value);
+            let productDetails = JSON.parse(document.getElementById('productDetails').value);
+
+            console.log("clicked");
+
+console.log(productDetails[0].name,"jjjjjjjjjjjjj");
+console.log(productDetails[0],"jjjjjjjjjjjjj");
+// console.log(orderDetails.address);
+// for (let i = 0; i < orderDetails.products.length; i++) {
+//     console.log(orderDetails.products[i].name);
+    
+// }
+
+// let map = orderDetails.products.map((product)=>{
+//     description: product.name
+//     // tax: 0,
+//     // price: product[0].price
+// })
+// console.log("////////////////////////");
+// let arr=[];
+// for (let i = 0; i < orderDetails.products.length; i++) {
+//    console.log(orderDetails.products[i].name);
+//    arr[i].description= orderDetails.products[i].name,
+//    arr[i].tax = 0,
+//    arr[i].price =  orderDetails.products[i].price     
+    
+// }
+
+// console.log(arr,"arrrrrrrrrr");
+// console.log("////////////////////////");
+
+// console.log(map,"mappppp");
+
+            console.log("clicked");
+            e.preventDefault();
+            Swal.fire("do you want to download Invoice", {
+                buttons: ['cancel', 'ok']
+            })
+                .then((res) => {
+                    if (res) {
+                        console.log("jhsdugfsdgf");
+                        const data = {
+                            "documentTitle": "INVOICE GoalZone", // Title of the invoice
+                            "currency": "INR",
+                            "taxNotation": "GST", // VAT or GST
+                            "marginTop": 25,
+                            "marginRight": 25,
+                            "marginLeft": 25,
+                            "marginBottom": 25,
+                            "logo": "https://public.easyinvoice.cloud/img/logo_en_original.png", // URL or base64 encoded image
+                            "sender": {
+                                "company": "GoalZone",
+                                "address": "Panampally Nagar",
+                                "zip": "1234 AB",
+                                "city": "Kochi",
+                                "country": "India"
+                            },
+                            "client": {
+                                "company": orderDetails.address[0].name,
+                                "address": orderDetails.address[0].housenumber,
+                                "zip": orderDetails.address[0].pin,
+                                "city": orderDetails.address[0].place,
+                                "state": orderDetails.address[0].state
+                            },
+                            "invoiceNumber": "2021.0001",
+                            "invoiceDate": "15-05-2023",
+                            "products": productDetails.map((product)=>({
+                                quantity:orderDetails.orderedItems[0].quantity,
+                                description:product.name,
+                                tax:0,
+                                price:product.price
+                            }))
+                            ,
+                            "bottomNotice": "Thank you for your business."
+                        };
+
+                        console.log("hiiiiiiiiiiiiiii");
+                        //create invoice
+                        easyinvoice.createInvoice(data, function (result) {
+                            easyinvoice.download('GoalZone-invoice.pdf', result.pdf);
+                            //	you can download like this as well:
+                            //	easyinvoice.download();
+                            //	easyinvoice.download('myInvoice.pdf');   
+                        });
+
+                    }
+                })
+        })
+    })
+</script>

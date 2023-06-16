@@ -1,0 +1,182 @@
+<script>
+  function validateForm(){
+      var name = document.forms["myForm"]["name"].value
+      var category = document.forms["myForm"]["category"].value
+      var quantity = document.forms["myForm"]["quantity"].value
+      var sub_category = document.forms["myForm"]["sub-category"].value
+      var color = document.forms["myForm"]["color"].value
+      var size = document.forms["myForm"]["size"].value
+      var description = document.forms["myForm"]["description"].value
+      var price = document.forms["myForm"]["price"].value
+      var image = document.forms["myForm"]["image"].value
+
+      var nameError = document.getElementById("nameError")
+      var categoryError = document.getElementById("categoryError")
+      var quantityError = document.getElementById("quantityError")
+      var sub_categoryError = document.getElementById("sub-categoryError")
+      var colorError = document.getElementById("colorError")
+      var sizeError = document.getElementById("sizeError")
+      var descriptionError = document.getElementById("descriptionError")
+      var priceError = document.getElementById("priceError")
+      var imageError = document.getElementById("imageError")
+
+      nameError.textContent = ""
+      categoryError.textContent = ""
+      quantityError.textContent = ""
+      sub_categoryError.textContent = ""
+      colorError.textContent = ""
+      sizeError.textContent = ""
+      descriptionError.textContent = ""
+      priceError.textContent = ""
+      imageError.textContent = ""
+
+      var isValid = true
+      var numericPattern = /^[0-9]+$/
+      if(name == ""){
+          nameError.textContent = "Name must be filled out"
+          isValid = false
+      
+      }
+      if(category == ""){
+          categoryError.textContent = "Please select a category"
+          isValid = false
+      }
+      if(quantity == ""){
+          quantityError.textContent = "Quantity must be filled out"
+          isValid = false
+      }
+      else if(!numericPattern.test(quantity.trim())){
+          quantityError.textContent = "Please enter valid quantity"
+          isValid = false
+      }
+      if(sub_category == ""){
+          sub_categoryError.textContent = "Please select a sub-category"
+          isValid = false
+      }
+      if(color == ""){
+          colorError.textContent = "Color must be filled out"
+          isValid = false
+      }
+      if(size == ""){
+          sizeError.textContent = "Size must be filled out"
+          isValid = false
+      }
+      if(description == ""){
+          descriptionError.textContent = "Description must be filled out"
+          isValid = false
+      }
+      if(image == ""){
+          imageError.textContent = "Please select an image"
+          isValid = false
+      }
+      if(price == ""){
+          priceError.textContent = "Price must be filled out"
+          isValid = false
+      }
+      else if(!numericPattern.test(price.trim())){
+          priceError.textContent = "Please enter valid price"
+          isValid = false
+      }
+
+      return isValid
+  }
+</script>
+
+  <section class="content-main">
+      <div class="row">
+          <div class="col-9">
+              <div class="content-header">
+                  <h2 class="content-title">Add New Product</h2>
+                  <form name="myForm" onsubmit="return validateForm()" action="/admin/updateProduct/<%= product._id %>" method="post" enctype="multipart/form-data">
+                      <div>
+                          <button type="submit" class="btn btn-md rounded font-sm hover-up">Update</button>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="card mb-4">
+                      <div class="card-body">
+                          <div class="mb-4">
+                              <label for="name" class="form-label">Product Name</label>
+                              <input value="<%= product.name %>" type="text" placeholder="Type here" class="form-control" name="name" id="name">
+                              <span id="nameError" class="error-message"></span>
+                          </div>
+                          <div class="col-md-4  mb-3">
+                              <label for="category">Select Category</label>
+                              <select name="category" id="" class="form-control">
+                                  <option ><%= product.category %></option>
+                                  <option >Men</option>
+                                  <option >Women</option>
+                                  <option >Men & Women</option>
+                                  
+                              </select>
+                              <span id="categoryError" class="error-message"></span>
+                          </div>
+                          <div class="col-md-4  mb-3">
+                              <label for="quantity" class="form-label">Quantity</label>
+                              <input value="<%= product.quantity %>" type="text" placeholder="Type here" class="form-control" name="quantity" id="quantity">
+                              <span id="quantityError" class="error-message"></span>
+                          </div>
+                          <div class="row gx-3">
+                              <div class="col-md-4  mb-3">
+                                  <label for="sub-category">Select Sub-Category</label>
+                                  <select name="sub_category" id="" class="form-control">
+                                      <option value=""><%= product.sub_category %></option>
+                                      <% for(let category of categories){ %>
+                                          <option value="<%= category.name %>"><%= category.name %></option>
+                                          <% } %>
+                                      
+                                  </select>
+                                  <span id="sub-categoryError" class="error-message"></span>
+                              </div>
+                              <div class="col-md-4  mb-3">
+                                  <label for="color" class="form-label">Color</label>
+                                  <input value="<%= product.color %>" type="text" placeholder="Type here" class="form-control" name="color" id="color">
+                                  <span id="colorError" class="error-message"></span>
+                              </div>
+                              <div class="col-md-4  mb-3">
+                                  <label for="size" class="form-label">Size</label>
+                                  <input value="<%= product.size %>" type="text" placeholder="Type here" class="form-control" name="size" id="size">
+                                  <span id="sizeError" class="error-message"></span>
+                              </div>
+                          </div>
+                          
+                      </div>
+                  </div> <!-- card end// -->
+                  <div class="card mb-4">
+                      <div class="card-body">
+                          <div>
+                              <label class="form-label">Description</label>
+                              <textarea name="description" placeholder="Type here" class="form-control" rows="4"><%= product.description %></textarea>
+                              <span id="descriptionError" class="error-message"></span>
+                          </div>
+                      </div>
+                  </div> <!-- card end// -->
+                   <!-- card end// -->
+              </div>
+              <div class="col-lg-3">
+                  <div class="card mb-4">
+                      <div class="card-body">
+                          <div>
+                              <label class="form-label">Images</label>
+                              <input name="image" class="form-control" type="file" multiple>
+                              <span id="imageError" class="error-message"></span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card mb-4">
+                      <div class="card-body">
+                          <div class="mb-4">
+                              <label class="form-label">Price</label>
+                              <input value="<%= product.price %>" type="text" placeholder="Type here" class="form-control" name="price">
+                              <span id="priceError" class="error-message"></span>
+                          </div>
+                          
+                      </div>
+                  </div> <!-- card end// -->
+              </div>
+           </form>
+                  
+      </div>
+  </section>
+  

@@ -1,0 +1,85 @@
+
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Products List</h2>
+                </div>
+                <div>
+                    
+                    <a href="/admin/addProduct" class="btn btn-primary btn-sm rounded">Create new</a>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <table id="product-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Size</th>
+                            <th>Quantity</th>
+                            <th>Category</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for( let i = 0; i < product.length; i++ ) { %>
+        
+                            <tr>
+                                <td><%= i+1 %></td>
+                                <td><b><%= product[i].name %></b></td>
+                                <td><%= product[i].size %></td>
+                                <td><%= product[i].quantity %></td>
+                                <td><%= product[i].category %></td>
+                                <td>
+                                    <img style="text-align: center; vertical-align: middle;" src="/<%= product[i].image[0] %>" width="150" height="150" alt="" srcset="">
+                                </td>
+                                
+                                <td width="20%">
+
+                                    <a href="/admin/editProduct/<%= product[i]._id %>">
+                                        <button 
+                                        class="btn btn-danger btn-sm btn-brand rounded font-sm mt-15">Edit</button>
+                                    </a>
+                                        <% if (product[i].status) { %>
+                                            
+                                            <a href="/admin/unlistProduct/<%= product[i]._id %>">
+                                                <button id="status-button"
+                                                    type="button"
+                                                   class="btn btn-sm btn-danger rounded font-sm mt-15 ps-3 pe-3">Unlist</button>
+                                            </a>
+
+                                        <% }else{ %>
+                                            <a href="/admin/listProduct/<%= product[i]._id  %>">
+                                                <button id="status-button"
+                                                    type="button"
+                                                   class="btn btn-sm btn-success rounded font-sm mt-15 ps-3 pe-3">List</button>
+                                            </a>
+                                        <% } %>    
+                                    
+                                    
+                                </td>
+
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                
+                <div class="card-body">
+                     
+                </div> <!-- card-body end// -->
+            </div> <!-- card end// -->
+            <div class="pagination-area mt-30 mb-50">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-start">
+                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                        <li class="page-item"><a class="page-link" href="#">02</a></li>
+                        <li class="page-item"><a class="page-link" href="#">03</a></li>
+                        <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#">16</a></li>
+                        <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </section> <!-- content-main end// -->
+        

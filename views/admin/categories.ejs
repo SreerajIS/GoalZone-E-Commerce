@@ -1,0 +1,113 @@
+
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Categories </h2>
+                    <p>Add, edit or delete a category</p>
+                </div>
+                <div>
+                    <input type="text" placeholder="Search Categories" class="form-control bg-white">
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <% if(message.length > 0){ %>
+                                <span class="alert text-danger float-center" >
+                                  <%= message %></span>
+                              <% } %> 
+                            <form action="/admin/categories" onsubmit="return categoryValidation()" method="post" name="categoryForm">
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Name</label>
+                                    <input type="text" placeholder="Type here" class="form-control" name="name" id="product_name" />
+                                    <span id="nameError" class="error-message"></span>
+                                </div>
+                               
+                                <div class="mb-4">
+                                    <label class="form-label">Description</label>
+                                    <textarea placeholder="Type here" class="form-control" name="description"></textarea>
+                                    <span id="descriptionError" class="error-message"></span>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">Create category</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th class="text-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" />
+                                                </div>
+                                            </th> -->
+                                            <th>No</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for( let i = 0; i < categories.length; i++ ) { %>
+        
+                                            <tr>
+                                                <td><%= i+1 %></td>
+                                                <td><b><%= categories[i].name %></b></td>
+                                                <td><%= categories[i].description %></td>
+                                                <td width="20%">
+                                                    
+                                                    <button 
+                                                        class="btn btn-danger btn-sm btn-brand rounded font-sm mt-15" onclick="categoryEditForm()">Edit</button>
+                                                    <a href="/admin/deleteCategory/<%= categories[i]._id %>">
+                                                        <button id="delete-category"
+                                                        class="btn btn-sm btn-brand rounded font-sm mt-15">Delete</button>
+                                                    </a>
+                                                    
+                                                </td>
+            
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> <!-- .col// -->
+                    </div> <!-- .row // -->
+                </div> <!-- card body .// -->
+            </div> <!-- card .// -->
+        </section> <!-- content-main end// -->
+        <script>
+            function categoryValidation(){
+              console.log("jdfhk")
+                var name = document.forms["categoryForm"]["name"].value
+                var description = document.forms["categoryForm"]["description"].value
+          
+                var nameError = document.getElementById("nameError")
+                var descriptionError = document.getElementById("descriptionError")
+                nameError.textContent = ""
+                descriptionError.textContent=""
+          
+                var isValid = true
+                if(name == ""){
+                    nameError.textContent = "Please fill the category name"
+                    isValid = false
+                
+                }
+                else if(name.length<4){
+                    nameError.textContent = "Name must be 4 characters"
+                    isValid = false
+                }
+                else if(description==""){
+                    descriptionError.textContent = "Description must be filled"
+                    isValid = false
+                }
+                else if(description.length<10){
+                    descriptionError.textContent = "Description must be 10 characters"
+                    isValid = false
+                }
+          
+                return isValid
+            }
+          </script>

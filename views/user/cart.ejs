@@ -1,0 +1,151 @@
+<% if(exist==true){ %>
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Cart</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+        <div class="row mb-5">
+          <form class="col-md-12" method="post">
+            <div class="site-blocks-table">
+              
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="product-thumbnail">Image</th>
+                    <th class="product-name">Product</th>
+                    <th class="product-price">Price</th>
+                    <th class="product-quantity">Quantity</th>
+                    <th class="product-total">Total</th>
+                    <th class="product-remove">Remove</th>
+                  </tr>
+                </thead>
+                <% cartList.product.forEach(product=>{%>
+                  <tbody>
+                    <tr>
+                      <td class="product-thumbnail">
+                        <img src="/<%= product.prodId.image[0] %>" alt="Image" class="img-fluid">
+                      </td>
+                      <td class="product-name">
+                        <h2 class="h5 text-black"><%= product.prodId.name %></h2>
+                      </td>
+                      <td>₹<%= product.prodId.price %></td>
+                      <td>
+                        <div class="input-group mb-3" style="max-width: 120px;">
+                          <div class="input-group-prepend">
+                            <button class="btn btn-outline-primary js-btn-minus" type="button" onclick="changeQuantity('<%= cartList._id %>','<%=product.prodId._id%>','<%=cartList.userId._id%>',-1,'<%=product.prodId.price%>')">&minus;</button>
+                          </div>
+                          <span style="margin: 10px;" id="<%=product.prodId._id%>">
+                            <%= product.quantity %>
+                          </span>
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-primary js-btn-plus" type="button" onclick="changeQuantity('<%= cartList._id %>','<%=product.prodId._id%>','<%=cartList.userId._id%>',1,'<%=product.prodId.price%>')">&plus;</button>
+                          </div>
+                        </div>
+  
+                      </td>
+                      <td>
+                        <span style="margin: 10px;" id="<%= product.prodId._id %>a">
+                          ₹<%= product.prodId.price %>
+                        </span>
+                        
+
+                      </td>
+                      <td><a href="/deleteCart/<%= product.prodId._id %>" class="btn btn-primary btn-sm">X</a></td>
+                    </tr>
+                  </tbody>
+                <% }) %>  
+                
+              </table>
+                  
+            </div>
+          </form>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-6 pl-5">
+            <div class="row justify-content-end">
+              <div class="col-md-7">
+                <div class="row">
+                  <div class="col-md-12 text-right border-bottom mb-5">
+                    <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <span class="text-black">Subtotal</span>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <span class="mtext-110 cl2" id="total">
+                      Rs. <%= totalPrice %>
+                    </span>
+                  </div>
+                </div>
+                <div class="row mb-5">
+                  <div class="col-md-6">
+                    <span class="text-black">Total</span>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <span class="mtext-110 cl2" id="totalAmount">
+                      Rs. <%= totalPrice %>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <a href="/checkout">
+                      <button class="btn btn-primary btn-lg py-3 btn-block">Proceed To Checkout</button>
+                    </a>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } else{ %>
+      <h2 style="text-align: center; margin: 200px;">Cart is empty!</h2>
+    <% } %> 
+   
+
+    <script>
+      function changeQuantity(cartId,prodId,userId,count,price){
+        let quantity = parseInt(document.getElementById(prodId).innerHTML)
+        let id = prodId+"a"
+        count = parseInt(count)
+        $.ajax({
+          url:'/changeQuantity',
+          data:{
+            cart:cartId,
+            product:prodId,
+            userId:userId,
+            count:count,
+            quantity:quantity
+          },
+          type:'post',
+          success: (response) => {
+            if (response.removeProduct) {
+              console.log('kjksdjf');
+                window.location.href = '/cart'
+            } else if (response.qtyChanged) {
+              console.log('aaaa')
+              document.getElementById(prodId).innerHTML = quantity+count;
+              let newquantity = quantity +count
+              document.getElementById(id).innerHTML = newquantity*price
+              document.getElementById('total').innerHTML = response.total;
+              document.getElementById('totalAmount').innerHTML = response.total;
+            }
+          }
+        })
+      }
+    </script>

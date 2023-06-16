@@ -1,0 +1,40 @@
+changeStatus:async(req,res)=>{
+	try {
+		const {text,orderId}= req.body
+		let order = await Order.findOne({_id:orderId})
+		let orderItems = order.orderedItems
+		console.log("hhhhhhhiii",orderItems)
+		for(let i=0;i<orderItems.length;i++){
+			await Product.updateOne({_id:orderItems[i].prodId},{$inc:{quantity:orderItems[i].quantity}})
+		}
+		let status = order.orderStatus
+		if(status == 'Delivered'){
+			let cash = order.totalAmount
+			await Order.updateOne({_id:id},{$set:{orderStatus:'Returned'}})
+			await User.updateOne({_id:req.session.user._id},{$inc:{wallet:cash}})
+			const registerWallet = new Wallet({
+			
+				price:cash,
+				date:new Date()
+			})
+			const registered = await registerWallet.save()
+		}
+		else{
+			let cash = order.totalAmount
+			await Order.updateOne({_id:id},{$set:{orderStatus:'Cancelled'}})
+			if(order.payment=="Razorpay"){
+				await User.updateOne({_id:req.session.user._id},{$inc:{wallet:cash}})
+				const registerWallet = new Wallet({
+			
+					price:cash,
+					date:new Date()
+				})
+				const registered = await registerWallet.save()
+			}
+		}
+		res.redirect('/account')
+	} catch (error) {
+		res.status(500).render("error",{error})
+	}
+	
+}

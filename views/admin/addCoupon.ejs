@@ -1,0 +1,96 @@
+   
+        <section class="content-main">
+          <div class="row">
+              <form id="myForm" name="myForm" onsubmit="return addCoupon()" action="/admin/addCoupon" method="post">
+              <div class="col-9">
+                  <div class="content-header">
+                      <h2 class="content-title">Add New Coupon</h2>
+                     
+                          <div>
+                              <button type="submit" class="btn btn-md rounded font-sm hover-up">Create</button>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-6">
+                      <div class="card mb-4">
+                          <div class="card-body">
+                              <div class="mb-4">
+                                  <label for="name" class="form-label">Coupon Name</label>
+                                  <input type="text" placeholder="Type here" class="form-control" name="name" id="name">
+                                  <span id="nameError" class="error-message"></span>
+                              </div>
+                              <div class="col-md-4  mb-3">
+                                  <label for="quantity" class="form-label">Code</label>
+                                  <input type="text" placeholder="Type here" class="form-control" name="code" id="code">
+                                  <span id="codeError" class="error-message"></span>
+                              </div>
+                              <div class="row gx-3">
+                                  <div class="col-md-4  mb-3">
+                                      <label class="form-label">Price</label>
+                                      <input type="text" placeholder="Type here" class="form-control" name="price">
+                                      <span id="priceError" class="error-message"></span>
+                                  </div>
+                                  <div class="col-md-4  mb-3">
+                                      <label for="size" class="form-label">Expiry Date</label>
+                                      <input type="date" class="form-control" name="date" id="date">
+                                      <span id="dateError" class="error-message"></span>
+                                  </div>
+                              </div>
+                              
+                          </div>
+                      </div> <!-- card end// -->
+                  </div>
+               </form>
+                      
+          </div>
+      </section>
+      
+      <script>
+          function addCoupon(){
+              console.log("skdjfkdsjf")
+              var name = document.forms["myForm"]["name"].value
+              var code = document.forms["myForm"]["code"].value
+              var price = document.forms["myForm"]["price"].value
+              var date = document.forms["myForm"]["date"].value
+  
+              var nameError = document.getElementById("nameError")
+              var codeError = document.getElementById("codeError")
+              var priceError = document.getElementById("priceError")
+              var dateError = document.getElementById("dateError")
+  
+              nameError.textContent = ""
+              codeError.textContent = ""
+              priceError.textContent = ""
+              dateError.textContent = ""
+  
+              var isValid = true
+              var numericPattern = /^[0-9]+$/
+              if(name == ""){
+                  nameError.textContent = "Name must be filled out"
+                  isValid = false
+              
+              }
+              if(code == ""){
+                  codeError.textContent = "Code must be filled out"
+                  isValid = false
+              }
+              else if(code.length !=6){
+                codeError.textContent = "Code must be 6 characters"
+                isValid = false
+              }
+              if(date == ""){
+                  dateError.textContent = "Date must be selected"
+                  isValid = false
+              }
+              if(price == ""){
+                  priceError.textContent = "Price must be filled out"
+                  isValid = false
+              }
+              else if(!numericPattern.test(price.trim())){
+                  priceError.textContent = "Please enter valid price"
+                  isValid = false
+              }
+              console.log(isValid)
+              return isValid
+          }
+      </script>

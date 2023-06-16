@@ -1,0 +1,121 @@
+
+
+<br><br><br>
+<div class="row">
+  <div class="col-md-6 m-auto">
+    <div class="container mt-5 pl-5">
+      <h2 class="text-center">Edit Address</h2>
+      <div id="error"></div>  
+      <form id="address-form" onsubmit="return addressValidation()" action="/edit-address/<%= address._id %>" method="post" name="address-form">
+        <div class="form-group">
+          <label for="">Name</label>
+          <input value="<%= address.name %>" id="name" type="text" class="form-control" name="name" placeholder="Enter Name" >
+          <span id="nameError" class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="">House Number</label>
+          <input value="<%= address.housenumber %>" type="text" class="form-control" name="housenumber" placeholder="Enter House Number" >
+          <span id="houseNumberError" class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="">Place</label>
+          <input value="<%= address.place %>" type="text" class="form-control" name="place" placeholder="Enter Place" >
+          <span id="placeError" class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="">State</label>
+          <input value="<%= address.state %>" type="text" class="form-control" name="state" placeholder="Enter State">
+          <span id="stateError" class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="">Pin</label>
+          <input value="<%= address.pin %>" type="number" class="form-control" name="pin" placeholder="Enter Pin" >
+          <span id="pinError" class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="">Phone</label>
+          <input value="<%= address.phone %>" type="number" class="form-control" name="phone" placeholder="Enter Phone" >
+          <span id="phoneError" class="error-message"></span>
+        </div>
+        <button type="submit" class="btn btn-primary float-right">Edit</button>
+      </form>
+    </div>
+  </div>
+</div>
+<br><br><br>
+<script>
+  function addressValidation(){
+    console.log("jdfhk")
+      var name = document.forms["address-form"]["name"].value
+      var housenumber = document.forms["address-form"]["housenumber"].value
+      var place = document.forms["address-form"]["place"].value
+      var state = document.forms["address-form"]["state"].value
+      var pin = document.forms["address-form"]["pin"].value
+      var phone = document.forms["address-form"]["phone"].value
+
+      var nameError = document.getElementById("nameError")
+      var houseNumberError = document.getElementById("houseNumberError")
+      var placeError = document.getElementById("placeError")
+      var stateError = document.getElementById("stateError")
+      var pinError = document.getElementById("pinError")
+      var phoneError = document.getElementById("phoneError")
+
+      nameError.textContent = ""
+      houseNumberError.textContent = ""
+      placeError.textContent = ""
+      stateError.textContent = ""
+      pinError.textContent = ""
+      phoneError.textContent = ""
+
+      var isValid = true
+      var numericPattern = /^[0-9]+$/
+      if(name == ""){
+          nameError.textContent = "Name must be filled out"
+          isValid = false
+      
+      }
+      else if(name.length<4){
+        nameError.textContent = "Name must be atleast 4 characters long"
+        isValid = false
+      }
+      if(housenumber == ""){
+          houseNumberError.textContent = "House Number must be filled out"
+          isValid = false
+      }
+      if(phone == ""){
+          phoneError.textContent = "Phone number must be filled out"
+          isValid = false
+      }
+      else if(!numericPattern.test(phone.trim())){
+          phoneError.textContent = "Please enter valid Phone"
+          isValid = false
+      }
+      else if(phone.length!=10){
+        phoneError.textContent = "Phone number must be 10 numbers"
+        isValid = false
+      }
+      if(place == ""){
+          placeError.textContent = "Place must be filled out"
+          isValid = false
+      }
+      if(state == ""){
+          stateError.textContent = "State must be filled out"
+          isValid = false
+      }
+      if(pin == ""){
+          pinError.textContent = "Pin must be filled out"
+          isValid = false
+      }
+      else if(!numericPattern.test(pin.trim())){
+          pinError.textContent = "Please enter valid Pin"
+          isValid = false
+      }
+      else if(pin.length!=6){
+        pinError.textContent = "Pin must be 6 numbers"
+        isValid = false
+      }
+
+      return isValid
+  }
+</script>
+

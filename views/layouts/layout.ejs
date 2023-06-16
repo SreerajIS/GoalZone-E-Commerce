@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <base href="/">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    
+
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/evara/assets/imgs/theme/favicon.svg">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/evara/assets/css/main.css">
+    <link rel="stylesheet" href="/css/magiczoomplus.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <style>
+      
+      .error-message{
+          color:red
+      }
+      .address-checkbox input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.address-checkbox span {
+  font-size: 14px;
+}
+
+/* Additional styles for aesthetics */
+h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+form {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 400px;
+}
+
+input[type="submit"] {
+  margin-top: 10px;
+}
+.container {
+  position: relative;
+}
+
+.align-right {
+  position: absolute;
+  top: 160px;
+  right: 15px;
+
+}
+    </style>
+    
+  </head>
+  <body>
+    <div class="site-wrap">
+      <% if(logout){ %>
+        <%- include('../partials/logout_header.ejs')%>
+      <%} else{ %>  
+        <%- include('../partials/header.ejs') %>
+      <% } %>
+  
+      <%- body %>
+      <%- include('../partials/footer.ejs') %>
+    </div>
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+
+  <script src="js/main.js"></script>
+  <script src="/evara/assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="/evara/assets/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="/evara/assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+    <script src="/evara/assets/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="/evara/assets/js/plugins/slick.js"></script>
+    <script src="/evara/assets/js/plugins/jquery.syotimer.min.js"></script>
+    <script src="/evara/assets/js/plugins/wow.js"></script>
+    <script src="/evara/assets/js/plugins/jquery-ui.js"></script>
+    <script src="/evara/assets/js/plugins/perfect-scrollbar.js"></script>
+    <script src="/evara/assets/js/plugins/magnific-popup.js"></script>
+    <script src="/evara/assets/js/plugins/select2.min.js"></script>
+    <script src="/evara/assets/js/plugins/waypoints.js"></script>
+    <script src="/evara/assets/js/plugins/counterup.js"></script>
+    <script src="/evara/assets/js/plugins/jquery.countdown.min.js"></script>
+    <script src="/evara/assets/js/plugins/images-loaded.js"></script>
+    <script src="/evara/assets/js/plugins/isotope.js"></script>
+    <script src="/evara/assets/js/plugins/scrollup.js"></script>
+    <script src="/evara/assets/js/plugins/jquery.vticker-min.js"></script>
+    <script src="/evara/assets/js/plugins/jquery.theia.sticky.js"></script>
+    <!-- Template  JS -->
+    <script src="/evara/assets/js/main.js"></script>
+    <script src="/js/magiczoomplus.js"></script>
+    <script src="https://unpkg.com/easyinvoice/dist/easyinvoice.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+          $('#order-table').DataTable();
+      });
+      $(document).ready(function () {
+          $('#wallet-table').DataTable();
+      });
+  
+      
+  
+  </script>
+    
+  </body>
+</html>

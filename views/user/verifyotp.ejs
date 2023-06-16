@@ -1,0 +1,66 @@
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <div class="login100-pic js-tilt" data-tilt>
+        <img src="/login/assets/images/img-01.png" alt="IMG">
+      </div>
+
+      
+      <form onsubmit="return verifyotp()" name="otp-form" action="/verifyotp/<%= number %>" method="post" class="login100-form validate-form">
+        <span class="login100-form-title">
+          Veify OTP
+        </span>
+
+        <div class="wrap-input100 validate-input" >
+          <input class="input100" type="number" name="otp" placeholder="Enter OTP">
+          <span class="focus-input100"></span>
+          <span id="otpError" class="error-message"></span>
+        </div>
+
+        
+        <div class="container-login100-form-btn">
+          <button type="submit" class="login100-form-btn">
+            Verify
+          </button>
+        </div>
+
+        <div class="text-center p-t-12">
+          <a class="txt2" href="/">
+            Home
+          </a>
+        </div>
+
+        <div class="text-center p-t-136">
+          <a class="txt2" href="/login">
+            Login
+            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+          </a>
+        </div>
+      </form>
+    </div>
+    <input type="hidden" id="random" value="<%= JSON.stringify(random) %>">
+  </div>
+</div>
+
+<script>
+  function verifyotp(){
+    var otp = document.forms["otp-form"]["otp"].value
+    var random = document.getElementById("random").value
+    console.log("this is it",random)
+
+    var otpError = document.getElementById("otpError")
+
+    otpError.textContent = ""
+
+    var isValid=true
+    if(otp ==""){
+      otpError.textContent = "OTP must be filled"
+      isValid = false
+    }
+    if(otp!=random){
+      otpError.textContent = "Invalid OTP"
+      isValid = false
+    }
+    return isValid
+  }
+</script>

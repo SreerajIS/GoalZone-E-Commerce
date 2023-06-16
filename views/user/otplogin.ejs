@@ -1,0 +1,45 @@
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <div class="login100-pic js-tilt" data-tilt>
+        <img src="/login/assets/images/img-01.png" alt="IMG">
+      </div>
+
+      
+      <form action="/otplogin" method="post" class="login100-form validate-form">
+        <span class="login100-form-title">
+          Member Login
+        </span>
+        <% if(message.length > 0){ %>
+          <div class="alert text-danger float-center" >
+            <%= message %>
+        <% } %> 
+
+        <div class="wrap-input100 validate-input" >
+          <input class="input100" type="phone" name="phone" placeholder="Enter Phone Number">
+          <span class="focus-input100"></span>
+        </div>
+
+        
+        <div class="container-login100-form-btn">
+          <button type="submit" class="login100-form-btn">
+            Send OTP
+          </button>
+        </div>
+
+        <div class="text-center p-t-12">
+          <a class="txt2" href="/">
+            Home
+          </a>
+        </div>
+
+        <div class="text-center p-t-136">
+          <a class="txt2" href="/login">
+            Login
+            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

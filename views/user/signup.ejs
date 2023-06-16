@@ -1,0 +1,136 @@
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <div class="login100-pic js-tilt" data-tilt>
+        <img src="/login/assets/images/img-01.png" alt="IMG">
+      </div>
+      <form id="signup-form" onsubmit="return signupValidation()" action="/signup" method="post" name="signup-form" class="login100-form validate-form">
+        <span class="login100-form-title">
+          Member Signup
+        </span>
+
+        <div class="form-group wrap-input100">
+          <input class="input100" id="name" type="text" class="form-control" name="name" placeholder="Enter Name" >
+          <span class="focus-input100"></span>
+          <span id="nameError" class="error-message"></span>
+        </div>
+        <div class="form-group wrap-input100">
+          <input class="input100" type="email" class="form-control" name="email" placeholder="Enter email" >
+          <span class="focus-input100"></span>
+          <span id="emailError" class="error-message"></span>
+        </div>
+        <div class="form-group wrap-input100">
+          <input class="input100" type="phone" class="form-control" name="phone" placeholder="Enter Phone Number" >
+          <span class="focus-input100"></span>
+          <span id="phoneError" class="error-message"></span>
+        </div>
+        <div class="form-group wrap-input100">
+          <input class="input100" type="password" class="form-control" name="password" placeholder="Enter Password">
+          <span class="focus-input100"></span>
+          <span id="passwordError" class="error-message"></span>
+        </div>
+        <div class="form-group wrap-input100">
+          <input class="input100" type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password" >
+          <span class="focus-input100"></span>
+          <span id="cpasswordError" class="error-message"></span>
+        </div>
+        
+        <div class="container-login100-form-btn">
+          <button type="submit" class="login100-form-btn">
+            Signup
+          </button>
+        </div>
+
+
+        <div class="text-center p-t-136">
+          <a class="txt2" href="/login">
+            Already have an account?
+            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+.wrap-login100 {
+padding: 10px 130px 10px 95px;
+}
+.p-t-136 {padding-top: 15px;}
+</style>
+
+
+<script>
+function signupValidation(){
+  console.log("jdfhk")
+    var name = document.forms["signup-form"]["name"].value
+    var email = document.forms["signup-form"]["email"].value
+    var phone = document.forms["signup-form"]["phone"].value
+    var password = document.forms["signup-form"]["password"].value
+    var cpassword = document.forms["signup-form"]["confirmpassword"].value
+
+    var nameError = document.getElementById("nameError")
+    var emailError = document.getElementById("emailError")
+    var phoneError = document.getElementById("phoneError")
+    var passwordError = document.getElementById("passwordError")
+    var cpasswordError = document.getElementById("cpasswordError")
+
+    nameError.textContent = ""
+    emailError.textContent = ""
+    phoneError.textContent = ""
+    passwordError.textContent = ""
+    cpasswordError.textContent = ""
+
+    var isValid = true
+    var numericPattern = /^[0-9]+$/
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if(name == ""){
+        nameError.textContent = "Name must be filled out"
+        isValid = false
+    
+    }
+    else if(name.length<4){
+      nameError.textContent = "Name must be atleast 4 characters long"
+      isValid = false
+    }
+    if(email == ""){
+        emailError.textContent = "Email must be filled out"
+        isValid = false
+    }
+    else if(!emailPattern.test(email.trim())){
+      emailError.textContent = "Please enter an valid email address"
+      isValid = false
+    }
+    if(phone == ""){
+        phoneError.textContent = "Phone number must be filled out"
+        isValid = false
+    }
+    else if(!numericPattern.test(phone.trim())){
+        phoneError.textContent = "Please enter valid Phone"
+        isValid = false
+    }
+    else if(phone.length!=10){
+      phoneError.textContent = "Phone number must be 10 numbers"
+      isValid = false
+    }
+    if(password == ""){
+        passwordError.textContent = "Password must be filled out"
+        isValid = false
+    }
+    else if(password.length<8){
+      passwordError.textContent = "Password must be atleast 8 characters"
+      isValid = false
+    }
+    if(cpassword == ""){
+        cpasswordError.textContent = "Confirm password must be filled out"
+        isValid = false
+    }
+    else if(password != cpassword){
+      cpasswordError.textContent = "Password do not match"
+      isValid = false
+    }
+
+    return isValid
+}
+</script>

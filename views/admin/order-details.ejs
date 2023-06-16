@@ -1,0 +1,112 @@
+
+                <div class="card-body">
+                    <div class="row mb-50 mt-20 order-info-wrap">
+                        <div class="col-md-4">
+                            <article class="icontext align-items-start">
+                                <span class="icon icon-sm rounded-circle bg-primary-light">
+                                    <i class="text-primary material-icons md-person"></i>
+                                </span>
+                                <div class="text">
+                                    <h6 class="mb-1">Customer</h6>
+                                    <p class="mb-1">
+                                        <%= address.name %> <br> <template class="__cf_email__" data-cfemail="e2838e879aa2879a838f928e87cc818d8f">[email&#160;protected]</template> <br> <%= address.phone %>
+                                    </p>
+                                </div>
+                            </article>
+                        </div> <!-- col// -->
+                        <div class="col-md-4">
+                            <article class="icontext align-items-start">
+                                <span class="icon icon-sm rounded-circle bg-primary-light">
+                                    <i class="text-primary material-icons md-local_shipping"></i>
+                                </span>
+                                <div class="text">
+                                    <h6 class="mb-1">Order info</h6>
+                                    <p class="mb-1">
+                                        Shipping: Fargo express <br> Pay method: <%= order.payment %> <br> Status: <%= order.orderStatus %>
+                                    </p>
+                                </div>
+                            </article>
+                        </div> <!-- col// -->
+                        <div class="col-md-4">
+                            <article class="icontext align-items-start">
+                                <span class="icon icon-sm rounded-circle bg-primary-light">
+                                    <i class="text-primary material-icons md-place"></i>
+                                </span>
+                                <div class="text">
+                                    <h6 class="mb-1">Deliver to</h6>
+                                    <p class="mb-1">
+                                        <%= address.name %>, <%= address.housenumber %> <br><%= address.place %>, <%= address.state %>, Pin:<%= address.pin %> <br> Phone:<%= address.phone %>
+                                    </p>
+                                </div>
+                            </article>
+                        </div> <!-- col// -->
+                    </div> <!-- row // -->
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th width="40%">Product</th>
+                                            <th width="20%">Unit Price</th>
+                                            <th width="20%">Quantity</th>
+                                            <th width="20%" class="text-end">Total</th>
+                                            <% if(order.orderStatus=='Cancellation Requested'){ %>
+                                                <th>Cancellation Reason</th>
+                                            <% } %>    
+                                            <% if(order.orderStatus=='Return Requested'){ %>
+                                                <th>Return Reason</th>
+                                            <% } %>    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for(let i=0;i<length;i++){  %>
+                                            <tr>
+                                                <td>
+                                                        <div class="left d-flex align-items-center">
+                                                            <img src="/<%= order.products[i].image[0] %>" width="100" height="100" class="img-xs" alt="Item">&nbsp; &nbsp; &nbsp; 
+                                                            <%= order.products[i].name %>
+                                                        </div>
+                                                </td>
+                                                <td class="align-middle"> <%= order.products[i].price %> </td>
+                                                <td class="align-middle"> <%= order.orderedItems[i].quantity %> </td>
+                                                <td class=" text-end align-middle"> <%= order.products[i].price * order.orderedItems[i].quantity %> </td>
+                                            
+                                            <% } %>
+                                            
+                                                
+                                            </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <article class="float-end">
+                                                    <dl class="dlist">
+                                                        <dt>Grand total:</dt>
+                                                        <dd> <b class="h5"><%= order.totalAmount%></b> </dd>
+                                                    </dl>
+                                                </article>
+                                            </td>
+                                            <% if(order.orderStatus=='Return Requested'|| order.orderStatus=='Cancellation Requested'){ %>
+                                                <td class="align-middle"><%= order.reason %></td>
+                                            <% } %>  
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div> <!-- table-responsive// -->
+                        </div> <!-- col// --><!-- col// -->
+                    </div>
+                </div> <!-- card-body end// -->
+            </div> <!-- card end// -->
+        </section> <!-- content-main end// -->
+       
+
+        <style>
+            table {
+              border: 1px solid rgb(92, 82, 82,0.2); /* Sets a 1px solid black border around the table */
+              border-collapse: collapse; /* Optional: Collapses the table borders into a single border */
+            }
+            
+            th, td {
+              border: 1px solid rgb(124, 105, 105,0.2); /* Sets a 1px solid black border for table cells */
+              padding: 8px; /* Optional: Adds padding to the table cells for better spacing */
+            }
+          </style>

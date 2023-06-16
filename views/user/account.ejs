@@ -1,0 +1,434 @@
+﻿<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
+        <section class="pt-150 pb-150">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 m-auto">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="dashboard-menu">
+                                    <ul class="nav flex-column" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="false"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="track-orders-tab" data-bs-toggle="tab" href="#track-orders" role="tab" aria-controls="track-orders" aria-selected="false"><i class="fi-rs-shopping-cart-check mr-10"></i>Wallet</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="address-tab" data-bs-toggle="tab" href="#address" role="tab" aria-controls="address" aria-selected="true"><i class="fi-rs-marker mr-10"></i>My Address</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="tab-content dashboard-content">
+                                    <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="mb-0">Hello </h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="mb-0">Your Orders</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table id="order-table" class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Order</th>
+                                                                <th>Date</th>
+                                                                <th>Status</th>
+                                                                <th>Total</th>
+                                                                <th>Details</th>
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% orderDetails.forEach(order=>{ %>
+                                                            <tr>
+                                                                <td><%= order._id %></td>
+                                                                <td><%=
+                                                                    order.orderDate.toLocaleDateString('en-GB')%></td>
+                                                                <td><%= order.orderStatus %></td>
+                                                                <td>Rs.<%=
+                                                                    order.totalAmount%></td>
+                                                                    <td>
+                                                                        <a href="/orderDetails/<%= order._id %>">
+                                                                            <button>view details</button>
+                                                                        </a>
+                                                                    </td>
+                                                                <td>
+                                                                    <% if(order.orderStatus=='Pending'){ %>
+                                                                        <button onclick="cancelOrder('<%= order._id %>')" id="cancel-button" type="button" class="btn btn-sm btn-success rounded font-sm mt-15 ps-3 pe-3" >Cancel</button>
+                                                                    <% } %>
+                                                                    <% if(order.orderStatus=='Delivered'){ %>
+                                                                        <button onclick="returnOrder('<%= order._id %>')" id="return-button" type="button" class="btn btn-sm btn-danger rounded font-sm mt-15 ps-3 pe-3" >Return</button>
+                                                                    <% } %>
+                                                                </td>
+                                                            </tr>
+                                                            <% }) %>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="mb-0">Wallet</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div>
+                                                    <h5>Total Amount:<%= userDetails.wallet %></h5>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table id="wallet-table" class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Id</th>
+                                                                <th>Date</th>
+                                                                <th>Amount</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            
+                                                            <% wallet.forEach(wallet=>{ %>
+                                                                
+                                                            <tr>
+                                                                <td><%= wallet._id %></td>
+                                                                <td><%=
+                                                                    wallet.date.toLocaleDateString('en-GB')%></td>
+                                                                <td>Rs.<%=
+                                                                    wallet.price%></td>
+                                                            </tr>
+                                                            <% }) %>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+                                        <div class="row">
+                                            <% for( let i = 0; i < address.length; i++ ) { %>
+                                            <div class="col-lg-6">
+                                                <div class="card mb-3 mb-lg-0">
+                                                    
+                                                        <div class="card-header">
+                                                            <h5 class="mb-0">Address</h5>
+                                                        </div>
+                                                        <div class="card-body container">
+                                                            <address><%= address[i].name %><br> <%= address[i].housenumber %>,<br> <%= address[i].place %> <br><%= address[i].state %>,<%= address[i].pin %> <br><%= address[i].phone %> </address>
+                                                            <br>
+                                                            <a href="/editAddress/<%= address[i]._id%>" class="btn-small " style="color: blue;">Edit</a>
+                                                            <a href="/deleteAddress/<%= address[i]._id  %>" class="btn-small align-right" style="color: red;">Delete</a>
+                                                        </div>
+                                                      
+                                                    
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                            <div class="card-body">
+                                                <a href="/add-address">
+                                                    <button>Add Address</button>
+                                                </a>
+                                            </div>  
+                                        </div>
+                                    </div>
+                                            
+                                                      
+                                                    
+                                    
+                                    <div class="tab-pane fade" id="account-detail" role="tabpanel"
+                                        aria-labelledby="account-detail-tab">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5>Account Details</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <form method="post" name="enq">
+                                                    <div class="row">
+                                                        <!-- profile pic -->
+
+                                                        <div class="form-group col-md-12">
+                                                            <label>Display Name </label>
+                                                            <input required="" class="form-control square"
+                                                                name="dname" type="text"
+                                                                value="<%= userDetails.name %>"
+                                                                style="background: #d2d2d4; border-radius: 20px;" readonly>
+
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label>Email Address </label>
+                                                            <input required="" class="form-control square"
+                                                                name="email" type="email"
+                                                                value="<%= userDetails.email %>"
+                                                                style="background: #d2d2d4; border-radius: 20px;" readonly>
+                                                        </div>
+
+                                                        <div class="form-group col-md-12">
+                                                            <label>Mobile </label>
+                                                            <input required="" class="form-control"
+                                                                name="mobile" type="text"
+                                                                value="<%= userDetails.phone %>"
+                                                                style="background: #d2d2d4; border-radius: 20px;" readonly>
+                                                        </div>
+
+                                                        <div class="col-md-12 mt-5 d-flex justify-content-end"
+                                                            style="margin-top: 20px;">
+                                                            <button type="button"
+                                                                class="cl0  pb-5 bg1 bor1 hov-btn1 p-lr-15 trans-04  btn-lg"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#editDetails">
+                                                                Edit
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="editDetails" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <form onsubmit="return profileValidation()" method="post" action="/postEditProfile" id="editProfile" name="editprofile"
+                                    enctype="multipart/form-data">
+                                    <div class="row">
+                                        <!-- profile pic -->
+
+                                        <div class="form-group col-md-12">
+                                            <label>Display Name </label>
+                                            <input required="" class="form-control square" name="name" type="text"
+                                                value="<%=userDetails.name  %>"
+                                                style="background: #d2d2d4; border-radius: 20px;">
+                                                <span id="nameError" class="error-message"></span>
+
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Email Address </label>
+                                            <input required="" class="form-control square" name="email" type="email"
+                                                value="<%= userDetails.email %>"
+                                                style="background: #d2d2d4; border-radius: 20px;">
+                                                <span id="emailError" class="error-message"></span>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
+                                            <label>Mobile </label>
+                                            <input required="" class="form-control" name="phone" type="text"
+                                                value="<%= userDetails.phone %>"
+                                                style="background: #d2d2d4; border-radius: 20px;">
+                                                <span id="phoneError" class="error-message"></span>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+
+        <script>
+            function profileValidation(){
+              console.log("jdfhk")
+                var name = document.forms["editprofile"]["name"].value
+                var email = document.forms["editprofile"]["email"].value
+                var phone = document.forms["editprofile"]["phone"].value
+          
+                var nameError = document.getElementById("nameError")
+                var emailError = document.getElementById("emailError")
+                var phoneError = document.getElementById("phoneError")
+          
+                nameError.textContent = ""
+                emailError.textContent = ""
+                phoneError.textContent = ""
+          
+                var isValid = true
+                var numericPattern = /^[0-9]+$/
+                var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                if(name == ""){
+                    nameError.textContent = "Name must be filled out"
+                    isValid = false
+                
+                }
+                else if(name.length<4){
+                  nameError.textContent = "Name must be atleast 4 characters long"
+                  isValid = false
+                }
+                if(email == ""){
+                    emailError.textContent = "Email must be filled out"
+                    isValid = false
+                }
+                else if(!emailPattern.test(email.trim())){
+                  emailError.textContent = "Please enter an valid email address"
+                  isValid = false
+                }
+                if(phone == ""){
+                    phoneError.textContent = "Phone number must be filled out"
+                    isValid = false
+                }
+                else if(!numericPattern.test(phone.trim())){
+                    phoneError.textContent = "Please enter valid Phone"
+                    isValid = false
+                }
+                else if(phone.length!=10){
+                  phoneError.textContent = "Phone number must be 10 numbers"
+                  isValid = false
+                }
+          
+                return isValid
+            }
+
+
+            function cancelOrder(orderId){
+                console.log(orderId)
+                Swal.fire({
+                    title: "Confirm Cancellation",
+                    text: "Please give the reason:",
+                    input: "text",
+                    inputPlaceholder: "Enter reason",
+                    showCancelButton: true,
+                    cancelButtonText: "Cancel",
+                    confirmButtonText: "Confirm",
+                    inputValidator: function(value) {
+                        return !value && "Please enter a value!";
+                    }
+                    }).then(function(result) {
+                    if (result.value) {
+                        var value = result.value;
+                        // User clicked "Confirm" and entered a value
+                        // Perform Ajax request here
+                        $.ajax({
+                        url: '/changeStatus',
+                        type: 'POST',
+                        data: {
+                            text: value,
+                            orderId:orderId
+                        },
+                        success: function(response) {
+                            // Handle successful response
+                            Swal.fire("Success!", "Cancellation request send successfully!", "success").then(()=>{
+                                location.reload();
+                            }
+                             
+                        );
+                            
+                         x
+                            
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error response
+                            Swal.fire("Error!", "Cancellation request failed!", "error");
+                        }
+                        });
+                    } else {
+                        // User clicked "Cancel" or closed the prompt
+                        Swal.fire("Cancelled", "No value entered", "error");
+                    }
+                    });
+
+            }
+            function returnOrder(orderId){
+                console.log(orderId)
+                Swal.fire({
+                    title: "Confirm Return",
+                    text: "Please give the reason:",
+                    input: "text",
+                    inputPlaceholder: "Enter reason",
+                    showCancelButton: true,
+                    cancelButtonText: "Cancel",
+                    confirmButtonText: "Confirm",
+                    inputValidator: function(value) {
+                        return !value && "Please enter a value!";
+                    }
+                    }).then(function(result) {
+                    if (result.value) {
+                        var value = result.value;
+                        // User clicked "Confirm" and entered a value
+                        // Perform Ajax request here
+                        $.ajax({
+                        url: '/changeStatus',
+                        type: 'POST',
+                        data: {
+                            text: value,
+                            orderId:orderId
+                        },
+                        success: function(response) {
+                            // Handle successful response
+                            Swal.fire("Success!", "Return request send successfully!", "success").then(()=>{
+                                location.reload();
+                            }
+                             
+                        );
+                            
+                         x
+                            
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error response
+                            Swal.fire("Error!", "Return request failed!", "error");
+                        }
+                        });
+                    } else {
+                        // User clicked "Cancel" or closed the prompt
+                        Swal.fire("Cancelled", "No value entered", "error");
+                    }
+                    });
+
+            }
+                    
+                
+
+
+
+
+
+
+
+          </script>
+    

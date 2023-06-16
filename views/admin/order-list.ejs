@@ -1,0 +1,111 @@
+<script>
+    function statusValidation(){
+      console.log("jdfhk")
+        var status = document.forms["changeStatus-form"]["status"].value
+  
+        var statusError = document.getElementById("statusError")
+        statusError.textContent = ""
+  
+        var isValid = true
+        if(status == ""){
+            statusError.textContent = "Choose a status"
+            isValid = false
+        
+        }
+        
+  
+        return isValid
+    }
+  </script>
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Order List </h2>
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="order-table" style="padding-bottom: 500px;" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+    
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col" class="text-center"> Details </th>
+                                    <th scope="col" class="text-center"> Action </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% orderDetails.forEach(order=>{ %>
+                                <tr>
+                                    <td><%= order._id %></td>
+                                    <td><b><%= order.users[0].name %></b></td>
+                                    <td><%= order.users[0].email %></template></td>
+                                    <td>
+                                        <% if (order.orderStatus=='Pending') { %>
+                                            <span class="badge rounded-pill bg-warning  "><%= order.orderStatus %></span>
+                                        <% } else if (order.orderStatus=='Cancellation Requested'|| order.orderStatus =='Return Requested') {%>
+                                            <span class="badge rounded-pill bg-dark  "><%= order.orderStatus %></span>
+                                            <% } else if (order.orderStatus=='Returned') {%>
+                                                <span class="badge rounded-pill bg-info  "><%= order.orderStatus %></span>
+                                                <% } else if (order.orderStatus == 'Cancelled') { %>
+                                                    <span class="badge rounded-pill bg-danger "><%= order.orderStatus %></span>
+                                                <% } else if (order.orderStatus == 'Delivered') {%>
+                                                    <span class="badge rounded-pill bg-success "><%= order.orderStatus %></span>
+                                                    <% } %>
+                                    </td>
+                                    <td><%= order.orderDate.toLocaleDateString('en-GB') %></td>
+                                    <td class="text-center">
+                                        <a href="/admin/order-details/<%= order._id  %>">
+                                            <button>view details</button>
+                                        </a>
+                                    </td>
+                                    <% if(order.orderStatus!="Cancelled"&&order.orderStatus!="Returned"){ %>
+                                        <td class="text-center">
+                                            <form name="changeStatus-form" onsubmit="return statusValidation()"  action="/admin/changeStatus/<%= order._id %>" method="post">
+                                                    <select name="status" id="" class="form-control">
+                                                        <option >Select Status</option>
+                                                        <option >Pending</option>
+                                                        <option >Delivered</option>
+                                                        <% if(order.orderStatus =="Cancellation Requested"){ %>
+                                                            <option >Cancelled</option>
+                                                        <% } %>    
+                                                        <% if(order.orderStatus =="Return Requested"){ %>
+                                                            <option >Returned</option>
+                                                        <% } %>    
+                                                        
+                                                        
+                                                    </select>
+                                                    <span id="statusError" class="error-message"></span>
+                                            <button class=" btn-primary " type="submit">Change</button>
+                                        </form>
+                                        </td>
+                                    <% } %>
+                                    
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div> <!-- table-responsive //end -->
+                </div> <!-- card-body end// -->
+            </div> <!-- card end// -->
+            <div class="pagination-area mt-15 mb-50">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-start">
+                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                        <li class="page-item"><a class="page-link" href="#">02</a></li>
+                        <li class="page-item"><a class="page-link" href="#">03</a></li>
+                        <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#">16</a></li>
+                        <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </section> <!-- content-main end// -->
+        
+        
